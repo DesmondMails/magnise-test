@@ -1,0 +1,27 @@
+{
+  "/auth": {
+    "target": "https://platform.fintacharts.com",
+    "secure": true,
+    "changeOrigin": true,
+    "pathRewrite": {
+      "^/auth": "/identity/realms/fintatech/protocol/openid-connect/token"
+    },
+    "logLevel": "debug"
+  },
+  "/api": {
+    "target": "https://platform.fintacharts.com",
+    "secure": true,
+    "changeOrigin": true,
+    "pathRewrite": {
+      "^/auth": "/api/"
+    },
+    "logLevel": "debug"
+  },
+  "/ws": {
+    "target": "wss://platform.fintacharts.com/api/streaming/ws/v1/realtime",
+    "ws": true,
+    "secure": true,
+    "changeOrigin": true,
+    "logLevel": "debug"
+  }
+}
