@@ -2,7 +2,6 @@ import { AfterViewInit, ChangeDetectorRef, Component, OnInit, ViewChild } from '
 import { FormControl, Validators } from '@angular/forms';
 import { AutocompleteInputComponent } from '@shared/components';
 import { UntilDestroy, untilDestroyed } from '@ngneat/until-destroy';
-import { MarketService } from '@features/home/services';
 import { InstrumentOptions } from '@features/home/interfaces';
 import { HomeQuery, HomeService } from '@features/home/state';
 
@@ -21,12 +20,7 @@ export class MarketSusbscriptionComponent implements AfterViewInit {
 
   availableInstruments: InstrumentOptions[] = [];
 
-  constructor(
-    private marketService: MarketService,
-    private homeQuery: HomeQuery,
-    private cd: ChangeDetectorRef,
-    private homeService: HomeService,
-  ) {
+  constructor(private homeQuery: HomeQuery, private cd: ChangeDetectorRef, private homeService: HomeService) {
     this.susbscribeOnInstrumentOptions();
   }
 
@@ -39,14 +33,7 @@ export class MarketSusbscriptionComponent implements AfterViewInit {
   }
 
   onSubscriptionClick(): void {
-    console.log('this.selectedInstrumentId', this.selectedInstrumentId);
-
-    // this.marketRealtimeService.sendMessage(this.selectedInstrumentId);
     this.homeService.subscribeOnCurrency(this.selectedInstrumentId);
-
-    // this.marketService.getCountsBack(this.selectedInstrumentId).subscribe((res) => {
-    //   console.log('res', res);
-    // });
   }
 
   isAutocompleteValid(): boolean {
