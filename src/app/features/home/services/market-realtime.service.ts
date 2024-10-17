@@ -1,31 +1,40 @@
 import { Injectable } from '@angular/core';
-import { WebSocketService } from '../../../shared/services';
-import { Observable } from 'rxjs';
+import { debounce, filter, Observable } from 'rxjs';
+import { WebSocketService } from '@shared/services';
+import { RealTimeResponses } from '../interfaces';
 
 @Injectable({
   providedIn: 'root',
 })
 export class MarketRealtimeService {
-  constructor(private webSocketSerive: WebSocketService) {}
+  constructor(private webSocketSerive: WebSocketService<RealTimeResponses>) {}
 
   startConnection(): void {
     this.webSocketSerive.connect();
-
-    this.sendMessage();
   }
 
-  listenSockets(): Observable<void> {
-    return this.webSocketSerive.listen();
+  listenMarketMessages(): Observable<RealTimeResponses> {
+    return this.webSocketSerive.listen().pipe(
+      filter((res) => {
+        return !!res?.last;
+      }),
+    );
   }
 
-  private sendMessage(): void {
-    this.webSocketSerive.sendMessage({
+  sendMessage(instrumentId: string): void {
+    const body = {
       type: 'l1-subscription',
       id: '1',
-      instrumentId: 'ad9e5345-4c3b-41fc-9437-1d253f62db52',
+      instrumentId,
       provider: 'simulation',
       subscribe: true,
-      kinds: ['ask', 'bid', 'last'],
-    });
+      kinds: ['last'],
+    };
+
+    this.webSocketSerive.sendMessage(body);
+  }
+
+  closeConnection(): void {
+    this.webSocketSerive.close();
   }
 }

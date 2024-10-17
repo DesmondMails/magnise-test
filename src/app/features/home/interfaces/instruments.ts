@@ -1,13 +1,12 @@
+import { Providers } from './index';
+
 export interface StockMapping {
   symbol: string;
   exchange: string;
   defaultOrderSize: number;
 }
 
-export interface StockMappings {
-  simulation: StockMapping;
-  alpaca: StockMapping;
-}
+export type StockMappings = Record<Providers, StockMapping>;
 
 export interface Gics {
   sectorId: number;
@@ -46,4 +45,9 @@ export interface InstrumentsResponse {
 export interface InstrumentsList {
   instrumentId: string;
   currency: string;
+}
+
+export interface InstrumentOptions {
+  name: string;
+  value: string;
 }

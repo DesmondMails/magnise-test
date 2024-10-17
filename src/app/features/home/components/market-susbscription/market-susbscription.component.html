@@ -1,8 +1,11 @@
 <div fxLayout="row" fxLayoutAlign="space-between baseline" fxLayoutGap="32">
-  <mat-form-field appearance="outline">
-    <mat-label>Email</mat-label>
-    <input matInput [formControl]="inputControl" />
-  </mat-form-field>
+  <app-autocomplete-input
+    placeholder="Enter currency"
+    [availableOptions]="availableInstruments"
+    (optionSelected)="onCurrencySelected($event)"
+  ></app-autocomplete-input>
 
-  <button mat-raised-button color="primary">Subscribe</button>
+  <button mat-raised-button color="primary" [disabled]="!isAutocompleteValid()" (click)="onSubscriptionClick()">
+    Subscribe
+  </button>
 </div>

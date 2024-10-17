@@ -1,0 +1,8 @@
+<mat-card *ngIf="!!lineChartData.datasets.length" appearance="outlined">
+  <mat-card-content>
+    <canvas baseChart [data]="lineChartData" [options]="lineChartOptions" [type]="lineChartType"></canvas>
+  </mat-card-content>
+  <mat-card-footer fxLayout="row" fxLayoutAlign="end center">
+    <mat-card-subtitle>Historial prices</mat-card-subtitle>
+  </mat-card-footer>
+</mat-card>

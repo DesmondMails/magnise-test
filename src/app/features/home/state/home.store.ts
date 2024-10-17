@@ -1,10 +1,13 @@
 import { Injectable } from '@angular/core';
-import { InstrumentsList } from '../interfaces';
+import { StoreWithGetter } from '@utils/index';
 import { StoreConfig } from '@datorama/akita';
-import { StoreWithGetter } from '../../../utils';
+import { InstrumentOptions, Providers, StockData } from '../interfaces';
 
 export interface HomeState {
-  instruments: InstrumentsList[];
+  instrumentsRawData: StockData[];
+  instrumentsOptions: InstrumentOptions[];
+  userSubscriptions: Map<string, string>;
+  providers: Providers[];
 }
 
 @Injectable({ providedIn: 'root' })
@@ -12,7 +15,9 @@ export interface HomeState {
 export class HomeStore extends StoreWithGetter<HomeState> {
   constructor() {
     super({
-      instruments: [],
+      instrumentsRawData: [],
+      instrumentsOptions: [],
+      userSubscriptions: new Map(),
     });
   }
 }

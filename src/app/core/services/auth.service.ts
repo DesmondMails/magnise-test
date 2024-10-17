@@ -1,14 +1,15 @@
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { catchError, Observable, tap, throwError } from 'rxjs';
+
 import { ACCESS_TOKEN } from '../constants';
 import { AuthResponse } from '../interfaces';
+import { environment } from '../../../environments/environment';
 
 @Injectable({
   providedIn: 'root',
 })
 export class AuthService {
-  // private readonly authUrl = environment.apiUrl
   private readonly authUrl = '/auth';
 
   constructor(private http: HttpClient) {}
@@ -19,15 +20,15 @@ export class AuthService {
     const body = new URLSearchParams();
 
     body.set('grant_type', 'password');
-    body.set('client_id', 'app-cli');
-    body.set('username', 'r_test@fintatech.com');
-    body.set('password', 'kisfiz-vUnvy9-sopnyv');
+    body.set('client_id', environment.clientId);
+    body.set('username', environment.username);
+    body.set('password', environment.password);
 
+    //Should be refresh token logic with interceptor
     return this.http.post<AuthResponse>(`${this.authUrl}`, body, { headers }).pipe(
       tap((res: AuthResponse) => {
         const { access_token } = res;
 
-        console.log('res', res);
         localStorage.setItem(ACCESS_TOKEN, access_token);
       }),
       catchError((err) => {

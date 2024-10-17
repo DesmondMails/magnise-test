@@ -7,10 +7,10 @@ import { AuthService } from '../../core/services';
 @Injectable({
   providedIn: 'root',
 })
-export class WebSocketService {
+export class WebSocketService<T> {
   private wsUrl = environment.wssUrl;
 
-  private socket$!: WebSocketSubject<any>;
+  private socket$!: WebSocketSubject<T>;
 
   constructor(private authService: AuthService) {}
 
@@ -36,7 +36,7 @@ export class WebSocketService {
     }
   }
 
-  listen(): Observable<any> {
+  listen(): Observable<T> {
     return this.socket$.asObservable();
   }
 

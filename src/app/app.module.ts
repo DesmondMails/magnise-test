@@ -1,5 +1,6 @@
 import { NgModule, APP_INITIALIZER } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
+import { provideCharts, withDefaultRegisterables } from 'ng2-charts';
 
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
@@ -29,6 +30,7 @@ function initializeApp(authService: AuthService) {
       useClass: TokenInterceptor,
       multi: true,
     },
+    provideCharts(withDefaultRegisterables()),
   ],
   bootstrap: [AppComponent],
 })

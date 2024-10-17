@@ -1,18 +1,36 @@
 import { NgModule } from '@angular/core';
+import { CommonModule } from '@angular/common';
+import { MatCardModule } from '@angular/material/card';
 
-import { HomeRouter } from './home-router.module';
-import { CoreModule } from '../../core/core.module';
-import { MarketService, MarketRealtimeService } from './services';
-import { MarketSusbscriptionComponent } from './components';
-import { HomePageComponent } from './pages';
-import { MatInputModule } from '@angular/material/input';
 import { MatButton } from '@angular/material/button';
-import { ReactiveFormsModule } from '@angular/forms';
 import { FlexModule } from '@angular/flex-layout';
+import { MatTableModule } from '@angular/material/table';
+import { MatPaginatorModule } from '@angular/material/paginator';
+import { MatSnackBarModule } from '@angular/material/snack-bar';
+import { BaseChartDirective } from 'ng2-charts';
+
+import { SharedModule } from '@shared/shared.module';
+
+import { HomeService } from './state';
+import { HomePageComponent } from './pages';
+import { HomeRouter } from './home-router.module';
+import { MarketService, MarketRealtimeService } from './services';
+import { MarketSusbscriptionComponent, MarketTableComponent, MarketChartComponent } from './components';
 
 @NgModule({
-  imports: [CoreModule, HomeRouter, MatInputModule, MatButton, ReactiveFormsModule, FlexModule],
-  providers: [MarketService, MarketRealtimeService],
-  declarations: [MarketSusbscriptionComponent, HomePageComponent],
+  imports: [
+    CommonModule,
+    HomeRouter,
+    MatButton,
+    FlexModule,
+    SharedModule,
+    MatTableModule,
+    BaseChartDirective,
+    MatPaginatorModule,
+    MatCardModule,
+    MatSnackBarModule,
+  ],
+  providers: [MarketService, MarketRealtimeService, HomeService],
+  declarations: [MarketSusbscriptionComponent, MarketTableComponent, MarketChartComponent, HomePageComponent],
 })
 export class HomeModule {}
